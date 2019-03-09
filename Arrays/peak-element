@@ -1,1 +1,38 @@
+A peak element is an element which is greater than its neighbours 
+#naive approach 
+static void peakElement(int[] arr, int k){
+        for (int i = 1; i <= k; i++)
+            if (arr[i - 1] <= arr[i] && arr[i] >= arr[i + 1])
+                System.out.println(arr[i] +" at position "+ i);
+    }
+Time complexity : O(n)
+Space complexity : O(1)
 
+
+#optimized approach using recursive binary search 
+static int peakElement(int arr[], int low, int high, int n) 
+    { 
+        int mid =  (low + high)/2 ;
+  
+        //comparing middle element with neighbours (mid==0,if  the array is sorted in descending 
+        //order and mid==n-1 ,if the array is sorted in ascending order)
+        if ((mid == 0 || arr[mid-1] <= arr[mid]) && (mid == n-1 || 
+             arr[mid+1] <= arr[mid])) 
+            return mid; 
+  
+        // If middle element is not peak and its left neighbor is 
+        // greater than it,then left half must have a peak element 
+        else if (mid > 0 && arr[mid-1] > arr[mid]) 
+            return peakElement(arr, low, (mid -1), n); 
+  
+        // If middle element is not peak and its right neighbor 
+        // is greater than it, then right half must have a peak 
+        // element 
+        else return peakElement(arr, (mid + 1), high, n); 
+    } 
+  
+    // A wrapper over recursive function findPeakUtil() 
+    static int findPeak(int arr[], int n) 
+    { 
+        return peakElement(arr, 0, n-1, n); 
+    } 

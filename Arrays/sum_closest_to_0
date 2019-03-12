@@ -1,0 +1,57 @@
+
+#naive approach
+static void sumClosestZero(int arr[], int n) 
+    {  
+      int min_sum, sum, min_l, min_r; 
+      min_l = 0; 
+      min_r = 1; 
+      min_sum = arr[0] + arr[1]; 
+       
+      for(int l = 0; l < n - 1; l++) 
+      { 
+        for(int r = l+1; r < n; r++) 
+        { 
+          sum = arr[l] + arr[r]; 
+          if(Math.abs(min_sum) > Math.abs(sum)) 
+          { 
+            min_sum = sum; 
+            min_l = l; 
+            min_r = r; 
+          } 
+        } 
+      } 
+       
+      System.out.println(arr[min_l]+" "+arr[min_r]); 
+    } 
+    
+   #Time Complexity : O(n^2)
+   #Space Complexity : O(1)
+   
+   #sorting the given array and iterating from left and right ends 
+   static void sumClosestZero(int arr[], int n) 
+    { 
+      int sum, min_sum = 999999;//we assume that minimum sum never reaches more than this   
+      int l = 0, r = n-1; 
+      int min_l = l, min_r = n-1; 
+      sort(arr, l, r); //sort using quick sort , merge sort in the worst case requires O(n^2)
+      while(l < r) 
+      { 
+        sum = arr[l] + arr[r]; 
+        if(Math.abs(sum) < Math.abs(min_sum)) 
+        { 
+          min_sum = sum; 
+          min_l = l; 
+          min_r = r; 
+        } 
+        if(sum < 0) 
+          l++; 
+        else
+          r--; 
+      }       
+      System.out.println(arr[min_l]+ " "+arr[min_r]); 
+    } 
+    
+    #Time Complexity : O(nlogn)+O(n) = O(nlogn)
+    #Space Complexity : O(1)
+    
+    
